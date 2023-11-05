@@ -16,6 +16,7 @@ public class Order {
     private final List<OrderItem> orderItems;
     private OrderStatus orderStatus;
     private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     public Order(UUID orderId, String name, Email email, String address, String postcode, List<OrderItem> orderItems, OrderStatus orderStatus) {
         this.orderId = orderId;
@@ -26,6 +27,7 @@ public class Order {
         this.orderItems = orderItems;
         this.orderStatus = orderStatus;
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
