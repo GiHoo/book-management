@@ -6,6 +6,7 @@ import com.programmers.bookmanagement.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +30,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book update(Book book) {
-        return bookRepository.update(book);
+        Book beforeBook = findById(book.getBookId())
+                .orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+
+        Book newBook = setUpdate(beforeBook, book);
+
+        return bookRepository.update(newBook);
     }
 
     @Override
@@ -52,4 +58,35 @@ public class BookServiceImpl implements BookService {
         System.out.println(bookId);
         return bookRepository.deleteById(bookId);
     }
+
+    private Book setUpdate(Book before, Book after) {
+        String bookName;
+        Category category;
+        long price;
+        String description;
+        LocalDateTime createdAt;
+        LocalDateTime updatedAt;
+
+        if (after.getBookName().equals("")) {
+            bookName = before.getBookName();
+        } else bookName = after.getBookName();
+
+        if (after.getCategory().toString().equals("")) {
+            category = before.getCategory();
+        } else category = after.getCategory();
+
+        if (after.getPrice() == 0) {
+            price = before.getPrice();
+        } else price = after.getPrice();
+
+        if (before.getDescription().equals("")) {
+            description = after.getDescription();
+        } else description = before.getDescription();
+
+        createdAt = before.getCreatedAt();
+        updatedAt = after.getUpdatedAt();
+
+        return new Book(after.getBookId(), bookName, category, price, description, createdAt, updatedAt);
+    }
+
 }
