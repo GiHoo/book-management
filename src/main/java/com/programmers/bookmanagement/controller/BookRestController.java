@@ -13,19 +13,19 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/books")
 public class BookRestController {
 
     private final BookService bookService;
 
-    @GetMapping("/books")
+    @GetMapping
     public List<Book> booksPage(Model model) {
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return books;
     }
 
-    @PostMapping("/new-book")
+    @PostMapping
     public Book newBook(@RequestBody CreateBookRequest createBookRequest) {
         return bookService.createBook(
                 createBookRequest.bookName(),
@@ -35,7 +35,7 @@ public class BookRestController {
         );
     }
 
-    @PutMapping("/books")
+    @PatchMapping
     public Book updateBook(@RequestBody UpdateBookRequest updateBookRequest) {
         Book book = new Book(
                 UUID.fromString(updateBookRequest.bookId()),
@@ -47,7 +47,7 @@ public class BookRestController {
         return bookService.update(book);
     }
 
-    @DeleteMapping("/books/{bookId}")
+    @DeleteMapping("/{bookId}")
     public Book deleteBook(@PathVariable String bookId) {
         return bookService.deleteById(UUID.fromString(bookId));
     }
