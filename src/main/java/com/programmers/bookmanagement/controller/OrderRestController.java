@@ -1,7 +1,6 @@
 package com.programmers.bookmanagement.controller;
 
 import com.programmers.bookmanagement.dto.CreateOrderRequest;
-import com.programmers.bookmanagement.model.Book;
 import com.programmers.bookmanagement.model.Email;
 import com.programmers.bookmanagement.model.Order;
 import com.programmers.bookmanagement.service.OrderServiceImpl;
@@ -40,5 +39,10 @@ public class OrderRestController {
     @DeleteMapping("/{orderId}")
     public Order deleteBook(@PathVariable String orderId) {
         return orderService.deleteById(UUID.fromString(orderId));
+    }
+
+    @GetMapping("/{orderId}")
+    public Order detailOrder(@PathVariable String orderId) {
+        return orderService.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("찾지 못했습니다"));
     }
 }
