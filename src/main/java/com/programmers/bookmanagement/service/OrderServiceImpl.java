@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,5 +33,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order deleteById(UUID orderId) {
         return orderRepository.delete(orderId);
+    }
+
+    @Override
+    public Optional<Order> findById(UUID orderId) {
+        return orderRepository.findById(orderId);
     }
 }
