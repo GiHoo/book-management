@@ -5,6 +5,7 @@ import com.programmers.bookmanagement.model.Order;
 import com.programmers.bookmanagement.model.OrderItem;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface OrderService {
@@ -14,4 +15,6 @@ public interface OrderService {
     List<Order> findAll();
 
     Order deleteById(UUID orderId);
+
+    Optional<Order> findById(UUID orderId);
 }
