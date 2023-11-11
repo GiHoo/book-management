@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,7 +53,6 @@ public class OrderJdbcRepository implements OrderRepository {
 
 
     @Override
-    @Transactional
     public Order insert(Order order) {
         jdbcTemplate.update(INSERT_ORDER, toOrderParamMap(order));
 
@@ -127,9 +125,6 @@ public class OrderJdbcRepository implements OrderRepository {
             return new OrderItem(bookId, category, price, quantity);
         }
     }
-
-
-
 
 
     //삽입 시 사용

@@ -1,5 +1,6 @@
 package com.programmers.bookmanagement.repository;
 
+import com.programmers.bookmanagement.exception.DataAccessException;
 import com.programmers.bookmanagement.model.Book;
 import com.programmers.bookmanagement.model.Category;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -70,14 +70,14 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book insert(Book book) {
         int update = jdbcTemplate.update(INSERT, toParam(book));
-        if(update != 1) throw new RuntimeException("추가되지 않았습니다.");
+        if(update != 1) throw new DataAccessException("책이 추가되지 않았습니다.");
         return book;
     }
 
     @Override
     public Book update(Book book) {
         int update = jdbcTemplate.update(UPDATE, toParam(book));
-        if (update != 1) throw new RuntimeException("수정되지 않았습니다.");
+        if (update != 1) throw new DataAccessException("책이 수정되지 않았습니다.");
         return book;
     }
 
